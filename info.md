@@ -46,4 +46,13 @@ nest g s users
 nest g s users/services/users --flat
 nest g co users/controllers/users --flat
 
-*Chequear Postgress y DockerCompose
+\*Chequear Postgress y DockerCompose
+Se puede usar Prisma,pero ya trae modulo TypeORM instalado
+npm install --save @nestjs/typeorm typeorm mysql2
+DatSource se usa para poder correr migraciones tambien (no necesariamente el server debe estar encendido)
+
+npm i typeorm-naming-strategies
+rutas relativas en todos los archivos(migracione)
+npm run m:run (Ejecutarlo)
+npm run m:gen -- ./migrations/init
+Eliminar migraciones i hay problemas de compilacion
