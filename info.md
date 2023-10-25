@@ -45,3 +45,5 @@ nest g mo users
 nest g s users
 nest g s users/services/users --flat
 nest g co users/controllers/users --flat
+
+*Chequear Postgress y DockerCompose
