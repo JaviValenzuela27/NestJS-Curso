@@ -3,11 +3,20 @@ import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
 import * as morgan from 'morgan';
 import { CORS } from './constants';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   //Configuracion para tener logs de las visitas a las rutas (Imprime en consola las peticiones a las rutas)
   app.use(morgan('dev'));
+  //Configuracion inicial para utilizar DTOs y validar la informacion con Class Validator
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transformOptions: {
+        enableImplicitConversion: true,
+      },
+    }),
+  );
   //Configuracion variables de entorno de forma global
   const configService = app.get(ConfigService);
   //Habilita el CORS para conexiones con Frontend
