@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UsersEntity } from '../entities/users.entity';
+import { ErrorManager } from 'src/utils/error.manager';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { UserDTO, UserToProjectDTO, UserUpdateDTO } from '../dto/user.dto';
-import { ErrorManager } from 'src/utils/error.manager';
+import { UsersEntity } from '../entities/users.entity';
 import { UsersProjectsEntity } from '../entities/usersProjects.entity';
 
 @Injectable()
@@ -29,7 +29,7 @@ export class UsersService {
       if (users.length === 0) {
         throw new ErrorManager({
           type: 'BAD_REQUEST',
-          message: 'No se encontró resultado',
+          message: 'No se encontro resultado',
         });
       }
       return users;
@@ -49,7 +49,7 @@ export class UsersService {
       if (!user) {
         throw new ErrorManager({
           type: 'BAD_REQUEST',
-          message: 'No se encontró resultado',
+          message: 'No se encontro resultado',
         });
       }
       return user;

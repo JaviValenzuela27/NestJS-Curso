@@ -55,4 +55,5 @@ npm i typeorm-naming-strategies
 rutas relativas en todos los archivos(migracione)
 npm run m:run (Ejecutarlo)
 npm run m:gen -- ./migrations/init
+npm run m:gen -- ./src/migrations/init
 Eliminar migraciones i hay problemas de compilacion
