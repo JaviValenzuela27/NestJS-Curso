@@ -59,3 +59,5 @@ npm run m:gen -- ./src/migrations/init
 Eliminar migraciones i hay problemas de compilacion
 
 Guards ejecutan o no un endpoint en base a si esta validado
+https://jwt.io/
+https://app.quicktype.io/
