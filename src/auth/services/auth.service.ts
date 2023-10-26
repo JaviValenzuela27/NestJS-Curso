@@ -3,7 +3,7 @@ import { UsersService } from 'src/users/services/users.service';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 import { UsersEntity } from 'src/users/entities/users.entity';
-import { PayloadToken } from '../interface/auth.interface';
+import { PayloadToken } from '../interfaces/auth.interface';
 
 @Injectable()
 export class AuthService {

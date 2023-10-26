@@ -57,3 +57,5 @@ npm run m:run (Ejecutarlo)
 npm run m:gen -- ./migrations/init
 npm run m:gen -- ./src/migrations/init
 Eliminar migraciones i hay problemas de compilacion
+
+Guards ejecutan o no un endpoint en base a si esta validado
