@@ -4,6 +4,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
+//Entidad base (Debe ser de tipo abstracta, que contiene los campos generales que se reutilizarán en todas las demás entidades)
 export abstract class BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
