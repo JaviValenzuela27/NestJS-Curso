@@ -10,9 +10,12 @@ import { HttpCustomService } from 'src/providers/http/http.service';
 
 @Module({
   imports: [
+    //Importa las entidades de usuarios y pryectos que se utilizaran en el servicio
     TypeOrmModule.forFeature([ProjectsEntity, UsersProjectsEntity]),
+    //Importa tambien el modulo de providers
     ProvidersModule,
   ],
+  //Agrega los demas servicios que se involucraran en los procesos
   providers: [ProjectsService, UsersService, HttpCustomService],
   controllers: [ProjectsController],
 })
