@@ -1,3 +1,4 @@
+//Interfaz para guardar un usuario
 export interface IUser {
   firstName: string;
   lastName: string;
