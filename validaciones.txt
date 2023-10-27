@@ -7,6 +7,19 @@ USUARIOS
 REGISTRAR USUARIO: (Public)
 http://localhost:8000/api/users/register
 
+{
+  "firstName": "Javier",
+  "lastName": "Valenzuela",
+  "age": 23,
+  "email": "javier.valenzuela@palmerola-airport.com",
+  "username": "javier.valenzuela",
+  "password": "1234567890",
+  "role": "ADMIN",
+    "id": "e1a04e0f-77ca-4092-bd50-4ad7d275acd2",
+    "createdAt": "2023-10-28T04:58:04.639Z",
+    "updatedAt": "2023-10-28T04:58:04.639Z"
+}
+
 BUSCAR USUARIO: (Solo AdminAccess)
 http://localhost:8000/api/users/all
 
@@ -48,3 +61,4 @@ TASKS
 
 CREAR TAREAS Y ASOCIARLA A UN PROYECTO (MINIMAMENTE UN AccessLevel DEVELOPER)
 http://localhost:8000/api/tasks/create/:projectId
+
