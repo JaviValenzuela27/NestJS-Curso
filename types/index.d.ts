@@ -1,4 +1,4 @@
-//NodeJS.ProcessEnv
+//Se agregan las variables de entorno para que aparezcan tipadas cuando se necesite
 
 declare namespace NodeJS {
   interface ProcessEnv {
