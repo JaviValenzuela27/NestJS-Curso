@@ -6,7 +6,6 @@ import {
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Request } from 'express';
-import { Observable } from 'rxjs';
 import {
   ACCESS_LEVEL_KEY,
   ADMIN_KEY,
@@ -63,7 +62,7 @@ export class AccessLevelGuard implements CanActivate {
       }
     }
 
-    if (roleUser === ROLES.ADMIN) {
+    if (roleUser === ROLES.ADMIN || roleUser === ROLES.CREATOR) {
       return true;
     }
 

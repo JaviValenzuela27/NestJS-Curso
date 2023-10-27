@@ -16,6 +16,7 @@ import { AuthGuard } from 'src/auth/guards/auth.guard';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { AdminAccess } from 'src/auth/decorators/admin.decorator';
+import { AccessLevel } from 'src/auth/decorators/access-level.decorator';
 
 @Controller('users')
 //Guardian para proteger las rutas
@@ -23,25 +24,26 @@ import { AdminAccess } from 'src/auth/decorators/admin.decorator';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
+  @PublicAccess()
   @Post('register')
   public async registerUser(@Body() body: UserDTO) {
     return await this.usersService.createUser(body);
   }
 
-  // @AdminAccess()
-  @Roles('ADMIN')
+  @AdminAccess()
   @Get('all')
   public async findAllUsers() {
     return await this.usersService.findUsers();
   }
   //Decorador para dar acceso publico a la ruta get por id
-  @PublicAccess()
+
   @Get(':id')
   public async findUserById(@Param('id', new ParseUUIDPipe()) id: string) {
     return await this.usersService.findUserById(id);
   }
 
-  @Post('add-to-project')
+  // @AccessLevel('OWNER')
+  @Post('add-to-project/:projectId')
   public async addToProject(@Body() body: UserToProjectDTO) {
     return await this.usersService.relationToProject(body);
   }

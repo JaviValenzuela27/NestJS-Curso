@@ -23,9 +23,12 @@ export class ProjectsController {
   constructor(private readonly projectService: ProjectsService) {}
 
   @Roles('CREATOR')
-  @Post('create')
-  public async createProject(@Body() body: ProjectDTO) {
-    return await this.projectService.createProject(body);
+  @Post('create/userOwner/:userId')
+  public async createProject(
+    @Body() body: ProjectDTO,
+    @Param('userId') userId: string,
+  ) {
+    return await this.projectService.createProject(body, userId);
   }
 
   @Get('all')
