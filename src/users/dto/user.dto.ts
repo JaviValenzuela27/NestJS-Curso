@@ -11,6 +11,7 @@ import { ACCESS_LEVEL, ROLES } from 'src/constants/roles';
 import { ProjectsEntity } from 'src/projects/entities/projects.entity';
 import { UsersEntity } from '../entities/users.entity';
 
+//DTO Para usuarios que se van a guardar
 export class UserDTO {
   @ApiProperty()
   @IsNotEmpty()
@@ -48,6 +49,7 @@ export class UserDTO {
   role: ROLES;
 }
 
+//DTO para usuarios que se van a actualizar
 export class UserUpdateDTO {
   @ApiProperty()
   @IsOptional()
@@ -79,6 +81,7 @@ export class UserUpdateDTO {
   role: ROLES;
 }
 
+//DTO con informacion para agregar un usuario a un proyecto
 export class UserToProjectDTO {
   @ApiProperty()
   @IsNotEmpty()

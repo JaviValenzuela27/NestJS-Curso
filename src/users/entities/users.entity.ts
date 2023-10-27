@@ -5,6 +5,7 @@ import { IUser } from '../../interfaces/user.interface';
 import { BaseEntity } from '../../config/base.entity';
 import { UsersProjectsEntity } from './usersProjects.entity';
 
+//Entidad de usuarios para la bdd
 @Entity({ name: 'users' })
 export class UsersEntity extends BaseEntity implements IUser {
   @Column()
@@ -29,6 +30,7 @@ export class UsersEntity extends BaseEntity implements IUser {
   @Column({ type: 'enum', enum: ROLES })
   role: ROLES;
 
+  //Relacion Un proyecto puede estar asociado a muchos usuarios
   @OneToMany(() => UsersProjectsEntity, (usersProjects) => usersProjects.user)
   projectsIncludes: UsersProjectsEntity[];
 }
