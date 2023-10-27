@@ -4,6 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import * as morgan from 'morgan';
 import { CORS } from './constants';
 import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -26,6 +27,15 @@ async function bootstrap() {
   app.enableCors(CORS);
   //Agrega prefijo "api" a todos las rutas
   app.setGlobalPrefix('api');
+
+  const config = new DocumentBuilder()
+    .setTitle('Taskrr API')
+    .setDescription('Aplicacion de gestion de tareas')
+    .setVersion('1.0')
+    .build();
+
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('docs', app, document);
   //Puerto en que escucha la app con variables de entorno
   await app.listen(configService.get('PORT'));
   //Console.Log de la URL en la que escucha la aplicacion

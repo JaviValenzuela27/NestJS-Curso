@@ -6,23 +6,23 @@ import {
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Request } from 'express';
+import { Observable } from 'rxjs';
 import {
   ACCESS_LEVEL_KEY,
   ADMIN_KEY,
   PUBLIC_KEY,
   ROLES_KEY,
 } from 'src/constants/key-decorators';
-import { ROLES } from 'src/constants/roles';
+import { ACCESS_LEVEL, ROLES } from 'src/constants/roles';
 import { UsersService } from 'src/users/services/users.service';
 
 @Injectable()
 export class AccessLevelGuard implements CanActivate {
   constructor(
-    private readonly userService: UsersService,
     private readonly reflector: Reflector,
+    private readonly userService: UsersService,
   ) {}
   async canActivate(context: ExecutionContext) {
-    //Verificar si la suta es publica
     const isPublic = this.reflector.get<boolean>(
       PUBLIC_KEY,
       context.getHandler(),
@@ -31,13 +31,13 @@ export class AccessLevelGuard implements CanActivate {
     if (isPublic) {
       return true;
     }
-    /////////////////////////////////////
+
     const roles = this.reflector.get<Array<keyof typeof ROLES>>(
       ROLES_KEY,
       context.getHandler(),
     );
 
-    const accessLevel = this.reflector.get<number>(
+    const accessLevel = this.reflector.get<keyof typeof ACCESS_LEVEL>(
       ACCESS_LEVEL_KEY,
       context.getHandler(),
     );
@@ -56,13 +56,13 @@ export class AccessLevelGuard implements CanActivate {
           return true;
         } else {
           throw new UnauthorizedException(
-            'No tienes permiso para esta operacion',
+            'No tienes permisos para esta operacion',
           );
         }
       }
     }
 
-    if (roleUser === ROLES.ADMIN) {
+    if (roleUser === ROLES.ADMIN || roleUser === ROLES.CREATOR) {
       return true;
     }
 
@@ -76,7 +76,12 @@ export class AccessLevelGuard implements CanActivate {
       throw new UnauthorizedException('No formas parte del proyecto');
     }
 
-    if (accessLevel !== userExistInProject.accessLevel) {
+    // DEVELOPER = 30,
+    // MANTEINER = 40,
+    // OWNER = 50,
+
+    //30 > 40
+    if (ACCESS_LEVEL[accessLevel] > userExistInProject.accessLevel) {
       throw new UnauthorizedException('No tienes el nivel de acceso necesario');
     }
 

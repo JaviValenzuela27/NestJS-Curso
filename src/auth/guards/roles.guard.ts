@@ -16,7 +16,6 @@ export class RolesGuard implements CanActivate {
   canActivate(
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
-    //Verificar si la suta es publica
     const isPublic = this.reflector.get<boolean>(
       PUBLIC_KEY,
       context.getHandler(),
@@ -25,7 +24,7 @@ export class RolesGuard implements CanActivate {
     if (isPublic) {
       return true;
     }
-    /////////////////////////////////////
+
     const roles = this.reflector.get<Array<keyof typeof ROLES>>(
       ROLES_KEY,
       context.getHandler(),
@@ -44,7 +43,7 @@ export class RolesGuard implements CanActivate {
         return true;
       } else {
         throw new UnauthorizedException(
-          'No tienes permiso para esta operacion',
+          'No tienes permisos para esta operacion',
         );
       }
     }
@@ -56,7 +55,7 @@ export class RolesGuard implements CanActivate {
     const isAuth = roles.some((role) => role === roleUser);
 
     if (!isAuth) {
-      throw new UnauthorizedException('No tienes permiso para esta operacion');
+      throw new UnauthorizedException('No tienes permisos para esta operacion');
     }
     return true;
   }

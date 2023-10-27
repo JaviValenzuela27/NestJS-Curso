@@ -7,20 +7,30 @@ import {
   ParseUUIDPipe,
   Post,
   Put,
+  Req,
   UseGuards,
 } from '@nestjs/common';
+import {
+  ApiHeader,
+  ApiHeaders,
+  ApiParam,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import { AccessLevel } from 'src/auth/decorators/access-level.decorator';
+import { AdminAccess } from 'src/auth/decorators/admin.decorator';
+import { PublicAccess } from 'src/auth/decorators/public.decorator';
+import { Roles } from 'src/auth/decorators/roles.decorator';
+import { AccessLevelGuard } from 'src/auth/guards/access-level.guard';
+import { AuthGuard } from 'src/auth/guards/auth.guard';
+import { RolesGuard } from 'src/auth/guards/roles.guard';
+import { ProjectsEntity } from 'src/projects/entities/projects.entity';
 import { UserDTO, UserToProjectDTO, UserUpdateDTO } from '../dto/user.dto';
 import { UsersService } from '../services/users.service';
-import { PublicAccess } from 'src/auth/decorators/public.decorator';
-import { AuthGuard } from 'src/auth/guards/auth.guard';
-import { Roles } from 'src/auth/decorators/roles.decorator';
-import { RolesGuard } from 'src/auth/guards/roles.guard';
-import { AdminAccess } from 'src/auth/decorators/admin.decorator';
-import { AccessLevel } from 'src/auth/decorators/access-level.decorator';
 
+@ApiTags('Users')
 @Controller('users')
-//Guardian para proteger las rutas
-@UseGuards(AuthGuard, RolesGuard)
+@UseGuards(AuthGuard, RolesGuard, AccessLevelGuard)
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
@@ -35,19 +45,40 @@ export class UsersController {
   public async findAllUsers() {
     return await this.usersService.findUsers();
   }
-  //Decorador para dar acceso publico a la ruta get por id
 
+  @ApiParam({
+    name: 'id',
+  })
+  @ApiHeader({
+    name: 'codrr_token',
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'No se encontro resultado',
+  })
   @Get(':id')
   public async findUserById(@Param('id', new ParseUUIDPipe()) id: string) {
     return await this.usersService.findUserById(id);
   }
 
-  // @AccessLevel('OWNER')
+  @ApiParam({
+    name: 'projectId',
+  })
+  @AccessLevel('OWNER')
   @Post('add-to-project/:projectId')
-  public async addToProject(@Body() body: UserToProjectDTO) {
-    return await this.usersService.relationToProject(body);
+  public async addToProject(
+    @Body() body: UserToProjectDTO,
+    @Param('projectId', new ParseUUIDPipe()) id: string,
+  ) {
+    return await this.usersService.relationToProject({
+      ...body,
+      project: id as unknown as ProjectsEntity,
+    });
   }
 
+  @ApiParam({
+    name: 'id',
+  })
   @Put('edit/:id')
   public async updateUser(
     @Param('id', new ParseUUIDPipe()) id: string,
@@ -56,6 +87,9 @@ export class UsersController {
     return await this.usersService.updateUser(body, id);
   }
 
+  @ApiParam({
+    name: 'id',
+  })
   @Delete('delete/:id')
   public async deleteUser(@Param('id', new ParseUUIDPipe()) id: string) {
     return await this.usersService.deleteUser(id);

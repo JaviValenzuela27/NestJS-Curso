@@ -1,4 +1,5 @@
 import { ROLES } from 'src/constants/roles';
+import { UsersEntity } from 'src/users/entities/users.entity';
 
 export interface PayloadToken {
   sub: string;
@@ -10,7 +11,11 @@ export interface AuthBody {
   password: string;
 }
 
-//Interfaz del resultado del token
+export interface AuthResponse {
+  accessToken: string;
+  user: UsersEntity;
+}
+
 export interface AuthTokenResult {
   role: string;
   sub: string;
@@ -18,7 +23,6 @@ export interface AuthTokenResult {
   exp: number;
 }
 
-//Interfaz para verificar si el token ha expirado
 export interface IUseToken {
   role: string;
   sub: string;

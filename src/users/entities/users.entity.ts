@@ -1,9 +1,9 @@
-import { BaseEntity } from '../../config/base.entity';
+import { Column, Entity, OneToMany } from 'typeorm';
+import { Exclude } from 'class-transformer';
 import { ROLES } from '../../constants/roles';
 import { IUser } from '../../interfaces/user.interface';
-import { Column, Entity, OneToMany } from 'typeorm';
+import { BaseEntity } from '../../config/base.entity';
 import { UsersProjectsEntity } from './usersProjects.entity';
-import { Exclude } from 'class-transformer';
 
 @Entity({ name: 'users' })
 export class UsersEntity extends BaseEntity implements IUser {

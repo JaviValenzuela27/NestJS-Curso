@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { TasksEntity } from '../entities/tasks.entity';
-import { Repository } from 'typeorm';
 import { ProjectsService } from 'src/projects/services/projects.service';
-import { TasksDTO } from '../dto/tasks.dto';
 import { ErrorManager } from 'src/utils/error.manager';
+import { Repository } from 'typeorm';
+import { TasksDTO } from '../dto/tasks.dto';
+import { TasksEntity } from '../entities/tasks.entity';
 
 @Injectable()
 export class TasksService {
@@ -23,10 +23,13 @@ export class TasksService {
       if (project === undefined) {
         throw new ErrorManager({
           type: 'NOT_FOUND',
-          message: 'No se eha encontrado el proyecto',
+          message: 'No se ha encontrado el proyecto',
         });
       }
-      return await this.taskRepository.save({ ...body, project });
+      return await this.taskRepository.save({
+        ...body,
+        project,
+      });
     } catch (error) {
       throw ErrorManager.createSignatureError(error.message);
     }

@@ -11,7 +11,6 @@ import { UsersService } from 'src/users/services/users.service';
 import { useToken } from 'src/utils/use.token';
 import { IUseToken } from '../interfaces/auth.interface';
 
-//Validacion del JWT para permitir el acceso a las rutas
 @Injectable()
 export class AuthGuard implements CanActivate {
   constructor(
@@ -29,9 +28,10 @@ export class AuthGuard implements CanActivate {
     }
 
     const req = context.switchToHttp().getRequest<Request>();
-    const token = req.headers['user_token'];
+
+    const token = req.headers['codrr_token'];
     if (!token || Array.isArray(token)) {
-      throw new UnauthorizedException('Invalid Token');
+      throw new UnauthorizedException('Invalid token');
     }
 
     const manageToken: IUseToken | string = useToken(token);
@@ -47,7 +47,7 @@ export class AuthGuard implements CanActivate {
     const { sub } = manageToken;
     const user = await this.userService.findUserById(sub);
     if (!user) {
-      throw new UnauthorizedException('Invalid User');
+      throw new UnauthorizedException('Invalid user');
     }
 
     req.idUser = user.id;

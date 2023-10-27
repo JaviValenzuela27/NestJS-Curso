@@ -1,12 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { ACCESS_LEVEL } from 'src/constants/roles';
+import { HttpCustomService } from 'src/providers/http/http.service';
+import { UsersProjectsEntity } from 'src/users/entities/usersProjects.entity';
+import { UsersService } from 'src/users/services/users.service';
 import { ErrorManager } from 'src/utils/error.manager';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { ProjectDTO, ProjectUpdateDTO } from '../dto/projects.dto';
 import { ProjectsEntity } from '../entities/projects.entity';
-import { UsersProjectsEntity } from 'src/users/entities/usersProjects.entity';
-import { ACCESS_LEVEL } from 'src/constants/roles';
-import { UsersService } from 'src/users/services/users.service';
 
 @Injectable()
 export class ProjectsService {
@@ -14,15 +15,16 @@ export class ProjectsService {
     @InjectRepository(ProjectsEntity)
     private readonly projectRepository: Repository<ProjectsEntity>,
     @InjectRepository(UsersProjectsEntity)
-    private readonly UsersProjectsEntity: Repository<UsersProjectsEntity>,
+    private readonly userProjectRepository: Repository<UsersProjectsEntity>,
     private readonly usersService: UsersService,
+    private readonly httpService: HttpCustomService,
   ) {}
 
   public async createProject(body: ProjectDTO, userId: string): Promise<any> {
     try {
       const user = await this.usersService.findUserById(userId);
       const project = await this.projectRepository.save(body);
-      return await this.UsersProjectsEntity.save({
+      return await this.userProjectRepository.save({
         accessLevel: ACCESS_LEVEL.OWNER,
         user: user,
         project,
@@ -30,6 +32,10 @@ export class ProjectsService {
     } catch (error) {
       throw ErrorManager.createSignatureError(error.message);
     }
+  }
+
+  public async listApi() {
+    return this.httpService.apiFindAll();
   }
 
   public async findProjects(): Promise<ProjectsEntity[]> {

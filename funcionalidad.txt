@@ -1,0 +1,5 @@
+Entidades: Usuarios, Proyectos, Tareas
+----Cada usuario va a tener un rol al crearse y va a tener proyectos relacionados
+----Cada proyecto va a tener usuarios relacionados con el proyecto y va a tener tareas especificas de ese proyecto
+----Many to Many: users_projects-> Cada usuario va a estar asociado a uno a varios proyectos y tendrá un nivel de acceso especifico en cada uno de los proyectos. Los proyectos pueden estar encargados en manos de muchos usuarios.
+----Tareas va a estar relacionada con proyectos; proyectos va a tener muchas tareas, pero una tarea solamente va a pertenecer a un proyecto

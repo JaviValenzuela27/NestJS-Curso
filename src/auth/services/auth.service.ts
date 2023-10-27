@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { UsersService } from 'src/users/services/users.service';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 import { UsersEntity } from 'src/users/entities/users.entity';
-import { PayloadToken } from '../interfaces/auth.interface';
+import { UsersService } from 'src/users/services/users.service';
+import { AuthResponse, PayloadToken } from '../interfaces/auth.interface';
 
 @Injectable()
 export class AuthService {
@@ -16,7 +16,7 @@ export class AuthService {
       key: 'username',
       value: username,
     });
-    const userByEmail = await this.userService.findBy({
+    const userByEmial = await this.userService.findBy({
       key: 'email',
       value: username,
     });
@@ -26,9 +26,9 @@ export class AuthService {
       if (match) return userByUsername;
     }
 
-    if (userByEmail) {
-      const match = await bcrypt.compare(password, userByEmail.password);
-      if (match) return userByEmail;
+    if (userByEmial) {
+      const match = await bcrypt.compare(password, userByEmial.password);
+      if (match) return userByEmial;
     }
 
     return null;
@@ -42,13 +42,17 @@ export class AuthService {
     payload: jwt.JwtPayload;
     secret: string;
     expires: number | string;
-  }) {
+  }): string {
     return jwt.sign(payload, secret, { expiresIn: expires });
   }
 
-  public async generateJWT(user: UsersEntity): Promise<any> {
+  public async generateJWT(user: UsersEntity): Promise<AuthResponse> {
     const getUser = await this.userService.findUserById(user.id);
-    const payload: PayloadToken = { role: getUser.role, sub: getUser.id };
+
+    const payload: PayloadToken = {
+      role: getUser.role,
+      sub: getUser.id,
+    };
 
     return {
       accessToken: this.signJWT({

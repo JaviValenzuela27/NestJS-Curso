@@ -4,13 +4,11 @@ import { UsersController } from './controllers/users.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersEntity } from './entities/users.entity';
 import { UsersProjectsEntity } from './entities/usersProjects.entity';
-
 @Global()
 @Module({
   imports: [TypeOrmModule.forFeature([UsersEntity, UsersProjectsEntity])],
   providers: [UsersService],
   controllers: [UsersController],
-  //Exportaciones de los cosas a utilizar en otros modulos
   exports: [UsersService, TypeOrmModule],
 })
 export class UsersModule {}
