@@ -1,6 +1,7 @@
 import { AuthTokenResult, IUseToken } from 'src/auth/interfaces/auth.interface';
 import * as jwt from 'jsonwebtoken';
 
+//Valida que el token sea valido y que no haya expirado
 export const useToken = (token: string): IUseToken | string => {
   try {
     const decode = jwt.decode(token) as AuthTokenResult;

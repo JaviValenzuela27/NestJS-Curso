@@ -6,6 +6,7 @@ import { UsersModule } from 'src/users/users.module';
 
 @Global()
 @Module({
+  //Se importa el UsersModule y UsersService ya que se usarán servicios del Modulo de usuarios
   imports: [UsersModule],
   providers: [AuthService, UsersService],
   controllers: [AuthController],
