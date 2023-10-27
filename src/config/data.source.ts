@@ -3,13 +3,18 @@ import { DataSource, DataSourceOptions } from 'typeorm';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 
 ConfigModule.forRoot({
-  envFilePath: `.${process.env.NODE_ENV}.env`,
+  envFilePath: `.${process.env.NODE_ENV.trim()}.env`,
 });
 
 const configService = new ConfigService();
 
 export const DataSourceConfig: DataSourceOptions = {
   type: 'mysql',
+  // host: "localhost",
+  // port: 3306,
+  // username: "root",
+  // password: "unerrorenlamatriz",
+  // database: "ejemplonest",
   host: configService.get('DB_HOST'),
   port: configService.get('DB_PORT'),
   username: configService.get('DB_USERNAME'),
