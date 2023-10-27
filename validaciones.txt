@@ -1,0 +1,50 @@
+LOGIN: (Public)
+http://localhost:8000/api/auth/login
+
+
+USUARIOS
+
+REGISTRAR USUARIO: (Public)
+http://localhost:8000/api/users/register
+
+BUSCAR USUARIO: (Solo AdminAccess)
+http://localhost:8000/api/users/all
+
+BUSCAR UN USUARIO: (Solo AdminAccess)
+http://localhost:8000/api/users/:id
+
+AGREGAR UN USUARIO A UN PROYECTO: (Solo AccessLevel "OWNER")
+http://localhost:8000/api/users/add-to-project/:projectId
+
+EDITAR USUARIO: (Solo AdminAccess)
+http://localhost:8000/api/users/edit/:id
+
+ELIMINAR USUARIO: (Solo AdminAccess)
+http://localhost:8000/api/users/delete/:id
+
+
+PROYECTOS
+
+CREAR PROYECTO PERTENECIENTE A UN USUARIO (SOLO ROL CREATOR)
+http://localhost:8000/api/projects/create/userOwner/:userId
+
+BUSCAR PROYECTOS: (SOLO ROL CREATOR)
+http://localhost:8000/api/projects/all
+
+BUSCAR PROYECTO POR ID: (SOLO ROL CREATOR)
+http://localhost:8000/api/projects/:projectId
+
+LISTAR API DE RICK AND MORTY (ACCESO PUBLICO)
+http://localhost:8000/api/projects/list/api
+
+EDITAR UN PROYECTO: (Solo AccessLevel "OWNER")
+http://localhost:8000/api/projects/edit/:projectId
+
+ELIMINAR UN PROYECTO: (Solo AccessLevel "OWNER")
+http://localhost:8000/api/projects/delete/:projectId
+
+
+TASKS
+
+CREAR TAREAS Y ASOCIARLA A UN PROYECTO (MINIMAMENTE UN AccessLevel DEVELOPER)
+http://localhost:8000/api/tasks/create/:projectId
