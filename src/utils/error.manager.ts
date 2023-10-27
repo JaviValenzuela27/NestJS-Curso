@@ -1,5 +1,6 @@
 import { HttpException, HttpStatus } from '@nestjs/common';
 
+//Manejador de errores en los procesos
 export class ErrorManager extends Error {
   constructor({
     type,
@@ -11,6 +12,7 @@ export class ErrorManager extends Error {
     super(`${type} :: ${message}`);
   }
 
+  //Recibe un string como mensaje y devuelve una excepcion http con un mensaje de error y un estatus de la peticion http
   public static createSignatureError(message: string) {
     const name = message.split(' :: ')[0];
     if (name) {

@@ -14,6 +14,7 @@ import { TasksModule } from './tasks/tasks.module';
       envFilePath: `.${process.env.NODE_ENV}.env`,
       isGlobal: true,
     }),
+    //Importacion de la configuracion hecha para typeORM y de los demas modulos
     TypeOrmModule.forRoot({ ...DataSourceConfig }),
     UsersModule,
     ProjectsModule,

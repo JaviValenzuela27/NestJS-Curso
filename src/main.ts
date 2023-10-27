@@ -28,6 +28,7 @@ async function bootstrap() {
   //Agrega prefijo "api" a todos las rutas
   app.setGlobalPrefix('api');
 
+  //Configuracion para documentar con Swagger
   const config = new DocumentBuilder()
     .setTitle('Taskrr API')
     .setDescription('Aplicacion de gestion de tareas')
