@@ -7,7 +7,9 @@ import { ProjectsEntity } from 'src/projects/entities/projects.entity';
 import { ProjectsService } from 'src/projects/services/projects.service';
 
 @Module({
+  //Se importan las entidades de tareas y proyectos
   imports: [TypeOrmModule.forFeature([TasksEntity, ProjectsEntity])],
+  //Se importan los servicios de tareas y proyectos
   providers: [TasksService, ProjectsService],
   controllers: [TasksController],
 })

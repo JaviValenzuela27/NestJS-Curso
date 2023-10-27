@@ -66,3 +66,5 @@ envfilePath en WINDOWS: envFilePath: `.${process.env.NODE_ENV.trim()}.env`
 script en package.json: "start:dev": "set NODE_ENV=develop && nest start --watch",
 
 EN ESTA PARTE NO QUEDÒ DEL TODO CLARO (CLONAR EL REPO)
+
+AGREGAR FUNCIONALIDAD DE EDITAR TAREAS

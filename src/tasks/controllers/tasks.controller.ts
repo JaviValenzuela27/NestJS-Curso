@@ -7,7 +7,9 @@ import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { TasksDTO } from '../dto/tasks.dto';
 import { TasksService } from '../services/tasks.service';
 @ApiTags('Tasks')
+//Ruta en la que se harán las peticiones a tareas
 @Controller('tasks')
+//Guards para proteger las rutas
 @UseGuards(AuthGuard, RolesGuard, AccessLevelGuard)
 export class TasksController {
   constructor(private readonly tasksService: TasksService) {}
@@ -15,12 +17,16 @@ export class TasksController {
   @ApiParam({
     name: 'projectId',
   })
+  //A partir del accessLevel Developer se podran crear tareas
   @AccessLevel('DEVELOPER')
+  //Ruta en la que se agregaran las nuevas tareas
   @Post('create/:projectId')
+  //Recibe un DTO con la informacion validada de las tareas y un parametro con el id del proyecto a asociar la tarea
   public async createTask(
     @Body() body: TasksDTO,
     @Param('projectId') projectId: string,
   ) {
-    return this.tasksService.createTask(body, projectId);
+    //Retorna la informacion de la tarea creada
+    return await this.tasksService.createTask(body, projectId);
   }
 }
